@@ -20,7 +20,8 @@ var ajax = require('request'),
     path = require('path'),
     routes = require('./routes'),
     utils = require('./lib/utils'),
-    version = require('./package').version;
+    version = require('./package').version,
+    i18n = require('i18n-abide');
 
 
 habitat.load();
@@ -54,6 +55,17 @@ app.locals({
   GA_ACCOUNT: env.get("GA_ACCOUNT"),
   GA_DOMAIN: env.get("GA_DOMAIN")
 });
+
+// Setup locales with i18n
+app.use( i18n.abide({
+  supported_languages: [
+    'en-US', 'th-TH'
+  ],
+  default_lang: "en-US",
+  translation_type: "key-value-json",
+  translation_directory: "locale",
+  locale_on_url: true
+}));
 
 // Express settings
 app.use(express.favicon());
@@ -97,6 +109,9 @@ app.use(express.static(path.join(__dirname, 'learning_projects')));
 app.use(express.static(path.join(__dirname, 'templates')));
 
 app.use( function(err, req, res, next) {
+  if (err){
+    console.log(err.message);
+  }
   res.send( 500, err );
 });
 
@@ -213,6 +228,34 @@ app.post('/publish',
 
 app.get( '/external/make-api.js', function( req, res ) {
   res.sendfile( path.resolve( __dirname, "node_modules/makeapi-client/src/make-api.js" ) );
+});
+
+app.get( '/friendlycode/templates/default-content.html', function( req, res ) {
+  res.render('/friendlycode/templates/default-content.html');
+});
+
+app.get( '/friendlycode/templates/error-dialog.html', function( req, res ) {
+  res.render('/friendlycode/templates/error-dialog.html');
+});
+
+app.get( '/friendlycode/templates/confirm-dialog.html', function( req, res ) {
+  res.render('/friendlycode/templates/confirm-dialog.html');
+});
+
+app.get( '/friendlycode/templates/publish-dialog.html', function( req, res ) {
+  res.render('/friendlycode/templates/publish-dialog.html');
+});
+
+app.get( '/friendlycode/templates/help-msg.html', function( req, res ) {
+  res.render('/friendlycode/templates/help-msg.html');
+});
+
+app.get( '/friendlycode/templates/error-msg.html', function( req, res ) {
+  res.render('/friendlycode/templates/error-msg.html');
+});
+
+app.get( '/friendlycode/templates/nav-options.html', function( req, res ) {
+  res.render('/friendlycode/templates/nav-options.html');
 });
 
 // DEVOPS - Healthcheck

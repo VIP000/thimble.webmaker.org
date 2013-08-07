@@ -8,7 +8,7 @@ exports.index = function(utils, env, appName) {
     if (req.pageData) {
       content = req.pageData.replace(/'/g, '\\\'').replace(/\n/g, '\\n');
     } else {
-      content = utils.defaultPage();
+      content = utils.defaultPage(req);
     }
 
     if (req.body.pageOperation === "remix") {
