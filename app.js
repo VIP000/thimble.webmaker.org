@@ -226,6 +226,11 @@ app.post('/publish',
   }
 );
 
+// Localized Strings
+app.get( '/strings/:lang?', function( req, res ) {
+  res.jsonp( i18n.getStrings( req.params.lang || req.lang || "en-US" ) );
+});
+
 app.get( '/external/make-api.js', function( req, res ) {
   res.sendfile( path.resolve( __dirname, "node_modules/makeapi-client/src/make-api.js" ) );
 });
@@ -256,6 +261,10 @@ app.get( '/friendlycode/templates/error-msg.html', function( req, res ) {
 
 app.get( '/friendlycode/templates/nav-options.html', function( req, res ) {
   res.render('/friendlycode/templates/nav-options.html');
+});
+
+app.get( '/slowparse/spec/errors.base.html', function( req, res ) {
+  res.render('/slowparse/spec/errors.base.html');
 });
 
 // DEVOPS - Healthcheck

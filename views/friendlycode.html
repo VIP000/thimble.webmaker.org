@@ -156,7 +156,7 @@
 
             $.ajax({
               type: "POST",
-              url: options.hackpubURL + "/publish",
+              url: options.hackpubURL + "/" + "{{lang}}" + "/publish",
               data: {
                 'html': data,
                 'metaData': metaData,
@@ -206,7 +206,7 @@
           hackpubURL: "{{appURL}}",
           publishURL: "{{appURL}}/project",
         }),
-        remixURLTemplate: "{{appURL}}/project/\{\{VIEW_URL\}\}/edit",
+        remixURLTemplate: "{{appURL}}/" + "{{lang}}" + "/project/\{\{VIEW_URL\}\}/edit",
         container: $("#bare-fc-holder")
       });
     });
